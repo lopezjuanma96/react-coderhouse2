@@ -1,0 +1,19 @@
+.cartWidgetBlock{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+}
+
+.cartWidgetBlockTotal {
+    color : burlywood;
+    font-weight: bolder;
+    background-color: white;
+    position: relative;
+    right: 17%;
+    bottom: 2%;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    padding-bottom: 1%;
+}

@@ -1,0 +1,67 @@
+.CartItemBlock{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1%;
+    margin: 2%;
+    border: 2px solid silver;
+    width: 96%;
+}
+
+.cartItemName{
+    color: rgb(39, 37, 37);
+}
+
+.cartItemDeleteButton{
+    padding: 0.5% 1%;
+    background-color: rgba(160, 82, 45, 0.9);
+    color: white;
+    font-weight: bold;
+    border-width: 0px;
+    -webkit-border-radius: 15%;
+    -moz-border-radius: 15%;
+    border-radius: 10px;
+}
+
+.cartItemDeleteButton:hover{
+    cursor: pointer;
+    background-color: rgba(160, 81, 45, 0.7);
+}
+
+.cartItemDeleteButton:active{
+    cursor: pointer;
+    background-color: rgba(160, 82, 45, 1);
+}
+
+.cartItemDeleteButton:disabled{
+    cursor: default;
+    background-color: rgba(66, 61, 58, 0.5);
+}
+
+.clearCartButton{
+    padding: 1%;
+    margin-left: 3%;
+    background-color: rgba(160, 82, 45, 0.9);
+    color: white;
+    font-weight: bold;
+    border-width: 0px;
+    -webkit-border-radius: 15%;
+    -moz-border-radius: 15%;
+    border-radius: 10px;
+}
+
+.clearCartButton:hover{
+    cursor: pointer;
+    background-color: rgba(160, 81, 45, 0.7);
+}
+
+.clearCartButton:active{
+    cursor: pointer;
+    background-color: rgba(160, 82, 45, 1);
+}
+
+.clearCartButton:disabled{
+    cursor: default;
+    background-color: rgba(66, 61, 58, 0.5);
+}

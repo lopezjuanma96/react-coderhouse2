@@ -1,0 +1,65 @@
+a{
+    text-decoration: none;
+}
+
+.itemBlock{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 1%;
+    margin: 2%;
+    border: 2px solid silver;
+    width: 96%;
+}
+
+.itemDescriptionBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 50%;
+}
+
+.itemStockBlock{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    align-self: flex-end;
+    width: 20%;
+    height: 100%;
+}
+
+.itemImage{
+    align-self: center;
+    width: 20%;
+}
+
+.itemName{
+    font-size: 3rem;
+    color: black;
+    max-width: 80%;
+}
+
+.itemDescription{
+    color: gray;
+    align-self: center;
+}
+
+.itemStock{
+    margin-bottom: 6%;
+    color: grey;
+}
+
+.itemPrice{
+    color: rgba(160, 82, 45, 10);
+    font-size: 2rem;
+    font-weight: bolder;
+    margin-top:2%;
+}
+
+.addToCartBlock{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    width:100%;
+    align-items: center;
+}
