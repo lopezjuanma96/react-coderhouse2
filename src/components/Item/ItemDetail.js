@@ -1,9 +1,20 @@
 import './ItemDetail.css';
 import { defaultText } from '../data/defaultText';
 import { ItemCount } from "./ItemCount";
+import { CartContext } from '../utils/CartContext';
+import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 export const ItemDetail = ({product}) => {
     let {id, nameS: singular, nameP:plural, price, quantity: amt, image:img} = product;
+
+    const {addToCart} = useContext(CartContext);
+    const [amtCart, setAmtCart] = useState(0);
+
+    const onAdd = (counter) => {
+        setAmtCart(counter);
+        addToCart({id, singular, plural, counter, price});
+    }
 
     return(
         <>
@@ -17,7 +28,12 @@ export const ItemDetail = ({product}) => {
                     <p className="itemPrice">${price}</p>
                     <p className="itemStock">En stock: {amt}</p>
                     <div className="addToCartBlock">
-                        <ItemCount max={amt} toAdd={{id, singular, plural, price}}/>
+                        {amtCart > 0 ?
+                        <Link to="/cart" className="endPurchaseContainer">
+                            <button className="endPurchase">Terminar compra</button>
+                        </Link>
+                        :<ItemCount max={amt} onAdd={onAdd}/>
+                        }
                     </div>
                 </div>
             </div>

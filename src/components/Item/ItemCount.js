@@ -1,17 +1,9 @@
 import './ItemCount.css';
-import { useState, useContext } from 'react';
-import { CartContext } from '../utils/CartContext';
+import { useState } from 'react';
 
-export const ItemCount = ({min = 0, max, toAdd}) => {
+export const ItemCount = ({min = 0, max, onAdd}) => {
 
-    const {id, singular, plural, price} = toAdd;
-
-    const {addToCart, howMany} = useContext(CartContext);
-    const [counter, setCounter] = useState(howMany(id));
-
-    const addToCartHandler = () => {
-        addToCart({id, singular, plural, counter, price});
-    }
+    const [counter, setCounter] = useState(min);
 
     const handleSuma = (e) => {
         e.stopPropagation();
@@ -28,10 +20,10 @@ export const ItemCount = ({min = 0, max, toAdd}) => {
         <>
             <div className="addToCartCounter">
                 <button onClick={handleResta} className="addToCartButton">-</button>
-                <p>En Carrito: {counter}</p>
+                <p>{counter}</p>
                 <button onClick={handleSuma}className="addToCartButton">+</button>
             </div>
-            <button className="addToCartButton" onClick={addToCartHandler}>AÑADIR</button>
+            <button className="addToCartButton" disabled={counter === 0} onClick={() => onAdd(counter)}>AÑADIR</button>
         </>
     )
 }

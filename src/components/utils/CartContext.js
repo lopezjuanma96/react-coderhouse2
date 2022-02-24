@@ -41,7 +41,7 @@ export const CartContextProvider = ({children}) => {
     const changeCartAmount = (id, amt) => {
         setCart(cart.map( (prod) => {
                 if (prod.id === id) {
-                    prod.counter = amt;
+                    prod.counter += amt;
                 }
                 return prod;
             }))

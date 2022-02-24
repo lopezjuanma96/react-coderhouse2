@@ -72,3 +72,8 @@ a{
     cursor: pointer;
     background-color: rgba(160, 82, 45, 1);
 }
+
+.addToCartButton:disabled{
+    cursor: default;
+    background-color: rgba(66, 61, 58, 0.5);
+}

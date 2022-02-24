@@ -63,3 +63,30 @@ a{
     width:100%;
     align-items: center;
 }
+
+.endPurchaseContainer{
+    width : 100%;
+}
+
+.endPurchase{
+    width : 100%;
+    padding: 4% 6%;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+    border-width: 0px;
+    -webkit-border-radius: 15%;
+    -moz-border-radius: 15%;
+    border-radius: 10px;
+}
+
+.endPurchase:hover{
+    background-color: darkgreen;
+    cursor : pointer;
+}
+
+.endPurchase:active{
+    background-color: rgb(4, 192, 4);
+    cursor : pointer; 
+}
+
