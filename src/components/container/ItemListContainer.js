@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 
 import { ItemList } from '../Item/ItemList';
 import { InvalidPage } from '../utils/InvalidPage';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 
 export const ItemListContainer = () => {
@@ -35,18 +35,25 @@ export const ItemListContainer = () => {
     useEffect( 
         () => {
             const productsRef = collection(db, 'productos');
-            getDocs(productsRef).then( 
+            const q = catId ? query(productsRef, where('category', '==', catId)) : productsRef;
+            getDocs(q).then( 
                 (res) => {
                     console.log("Products Loaded successfully");
+                    /*
                     let docList = res.docs.map(
                         (doc) => {return {
                             id: doc.id, //id has the doc id
                             ...doc.data() //data has each field on the doc
                         }
                     })
-                    //console.log(docList)
-                    setStock(catId ? docList.filter((elem) => elem.category === catId)
-                                :docList);
+                    console.log(docList)
+                    */
+                    setStock(res.docs.map(
+                        (doc) => {return {
+                            id: doc.id, //id has the doc id
+                            ...doc.data() //data has each field on the doc
+                        }
+                    }));
                 }
             ).catch(
                 (res) => {
