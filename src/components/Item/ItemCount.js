@@ -19,9 +19,9 @@ export const ItemCount = ({min = 0, max, onAdd}) => {
     return (
         <>
             <div className="addToCartCounter">
-                <button onClick={handleResta} className="addToCartButton">-</button>
+                <button onClick={handleResta} className="addToCartButton" disabled={counter === min}>-</button>
                 <p>{counter}</p>
-                <button onClick={handleSuma}className="addToCartButton">+</button>
+                <button onClick={handleSuma}className="addToCartButton" disabled={counter === max}>+</button>
             </div>
             <button className="addToCartButton" disabled={counter === 0} onClick={() => onAdd(counter)}>AÑADIR</button>
         </>

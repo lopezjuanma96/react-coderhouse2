@@ -52,15 +52,29 @@ PARA QUE LOS LINKS FUNCIONEN EL NAVBAR TIENE QUE ESTAR DENTRO DEL ROUTER PERO NO
 ETIQUETA NAVIGATE:
 
 sirve para que podamos renderizar algo especifico si el usuario no entra a un link existente
-
 import {Navigate} from 'reac-router-dom';
 <Routes>
-    <Route path="subpath de mi pagina" element=elemento a activar en ese path>
-    <Route path="subpath de mi pagina" element=elemento a activar en ese path>
-    <Route path="subpath de mi pagina" element=elemento a activar en ese path>
-    <Route path="*" element={<Navigate to='/'/>}> //asi redireccionaría todo lo que no se encuentra a home
-    <Route path="*" element={<Navigate to='/error404'/>}> //asi redireccionaría a una pagina 404 custom dentro del spa (debemos agregar el componente y el route correspondiente)
+<Route path="subpath de mi pagina" element=elemento a activar en ese path>
+<Route path="subpath de mi pagina" element=elemento a activar en ese path>
+<Route path="subpath de mi pagina" element=elemento a activar en ese path>
+<Route path="*" element={<Navigate to='/'/>}> //asi redireccionaría todo lo que no se encuentra a home
+<Route path="*" element={<Navigate to='/error404'/>}> //asi redireccionaría a una pagina 404 custom dentro del spa (debemos agregar el componente y el route correspondiente)
 <Routes/>
+
+si un componente retorna solo navigate, al renderizarlo directamente vuelve a la pagina a la que 
+Navigate redirija:
+
+export const component = () => {
+    ..
+
+    if (cart.length === 0){
+        return(</Navigate to={"/"}>); //si el carrito esta vacio vuelve a la pagina principal
+    } else {
+        return(</CartView>)
+    }
+}
+
+
 */
 
 /*ROUTEADO CON PARAMETROS

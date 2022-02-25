@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react'; //ver ejemplos de custom Hooks en clase extra 18/02
 
 //USO DE PROP CHILDREN
 
