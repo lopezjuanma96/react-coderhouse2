@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 
 import { ItemList } from '../Item/ItemList';
 import { InvalidPage } from '../utils/InvalidPage';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase/config';
 
 export const ItemListContainer = () => {
     
@@ -15,6 +17,22 @@ export const ItemListContainer = () => {
     //console.log(catId);
     //console.log(stockState.length);
 
+    useEffect(
+        () => {
+            setLoaded(false);
+            const productsRef = collection(db, 'productos');
+
+            getDocs(productsRef)
+                .then((resp) => {
+                    //console.log(resp);
+                    console.log(resp.docs.map((doc) => doc.data())); //resp es la collection encontrada, el parametro docs te da los documentos en dicha collection en forma de array
+                    setLoaded(true);
+                })
+        },
+        [catId]
+    )
+
+    /*
     useEffect( 
         () => {
             setLoaded(false);
@@ -34,7 +52,7 @@ export const ItemListContainer = () => {
             )
         },
         [catId]
-    )
+    )*/
 
     return(
         loaded?
