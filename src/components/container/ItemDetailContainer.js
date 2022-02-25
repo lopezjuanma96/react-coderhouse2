@@ -3,18 +3,32 @@ import { useParams } from "react-router-dom";
 import { getStock } from "../utils/promises";
 import {ItemDetail} from "../Item/ItemDetail";
 import { InvalidPage } from "../utils/InvalidPage";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 export const ItemDetailContainer = () => {
 
     let [productState, setProductState] = useState({});
     let [loaded, setLoaded] = useState(false);
     let {itemId} = useParams();
-
+    /*
     useEffect(
         () => {
-            getStock(true).then(
-                (res) => {
-                    setProductState(res.find((elem) => elem.id === itemId));
+            setLoaded(false);
+            const docRef = doc(db, 'productos', itemId);
+            getDoc(docRef).
+                then((resp) => {
+                    console.log(resp.data())
+                })
+        }
+    )*/
+    useEffect(
+        () => {
+            setLoaded(false);
+            const docRef = doc(db, 'productos', itemId);
+            getDoc(docRef)
+                .then((res) => {
+                    setProductState({ id: res.id, ...res.data()});
                 }
             ).catch(
                 (res) => {
@@ -26,6 +40,7 @@ export const ItemDetailContainer = () => {
         },
         [itemId]
     )
+
     return(
         loaded?
             productState?

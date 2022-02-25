@@ -43,6 +43,7 @@ const analytics = getAnalytics(app);
 export const db = getFirestore(app);
 
 --en el lugar de uso
+---puedo obtener una collection, que en su parametro docs tiene un array con todos los documentos
 
 import { db } from "../firebase/config.js"
 import { collection, getDocs } from "firebase/firestore"
@@ -50,4 +51,16 @@ import { collection, getDocs } from "firebase/firestore"
 const productsRef = collection(db, "nombre de la collection");
 
 getDocs(productsRef) //esto genera y devuelve una promise asi que puedo agregarle los metodos then, etc
+
+---o puedo obtener un documento en particular
+
+import { db } from "../firebase/config.js"
+import { doc, getDoc } from "firebase/firestore"
+
+const productsRef = doc(db, "nombre de la collection", "id del documento");
+
+getDoc(productsRef) //esto genera y devuelve una promise asi que puedo agregarle los metodos then, etc
+
+para hacer filtrados es mucho mas eficiente usar metodos de firebase (tipo query) que devuelva solo
+los productos necesarios, en vez de filtrarlos manualmente despues de importarlos a todos
 */
