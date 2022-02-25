@@ -17,11 +17,11 @@ export const ItemListContainer = () => {
     //console.log(catId);
     //console.log(stockState.length);
 
+    /*
     useEffect(
         () => {
             setLoaded(false);
             const productsRef = collection(db, 'productos');
-
             getDocs(productsRef)
                 .then((resp) => {
                     //console.log(resp);
@@ -30,18 +30,24 @@ export const ItemListContainer = () => {
                 })
         },
         [catId]
-    )
+    )*/
 
-    /*
     useEffect( 
         () => {
-            setLoaded(false);
-            getStock(true).then( 
+            const productsRef = collection(db, 'productos');
+            getDocs(productsRef).then( 
                 (res) => {
                     console.log("Products Loaded successfully");
-                    setStock(catId ? res.filter((elem) => elem.category === catId)
-                                :res);
-                } 
+                    let docList = res.docs.map(
+                        (doc) => {return {
+                            id: doc.id, //id has the doc id
+                            ...doc.data() //data has each field on the doc
+                        }
+                    })
+                    //console.log(docList)
+                    setStock(catId ? docList.filter((elem) => elem.category === catId)
+                                :docList);
+                }
             ).catch(
                 (res) => {
                     console.log("Products Loading failed due to");
@@ -52,7 +58,7 @@ export const ItemListContainer = () => {
             )
         },
         [catId]
-    )*/
+    )
 
     return(
         loaded?
