@@ -63,4 +63,6 @@ getDoc(productsRef) //esto genera y devuelve una promise asi que puedo agregarle
 
 para hacer filtrados es mucho mas eficiente usar metodos de firebase (tipo query) que devuelva solo
 los productos necesarios, en vez de filtrarlos manualmente despues de importarlos a todos
+
+las imagenes se pueden cargar en el firebase storage y luego referenciarlas desde el token de acceso
 */
