@@ -1,5 +1,4 @@
 import './ItemListContainer.css'
-import { getStock } from '../utils/promises';
 import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 

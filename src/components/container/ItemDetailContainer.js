@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getStock } from "../utils/promises";
 import {ItemDetail} from "../Item/ItemDetail";
 import { InvalidPage } from "../utils/InvalidPage";
 import { doc, getDoc } from "firebase/firestore";

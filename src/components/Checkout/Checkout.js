@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, updateDoc, getDoc, doc, collection } from "firebase/firestore";
 import { useContext, useState } from "react"
 import { db } from "../../firebase/config";
 import { CartContext } from "../utils/CartContext"
@@ -39,9 +39,18 @@ export const Checkout = () => {
         
         const ordersRef = collection(db, "orders");
         addDoc(ordersRef, orden)
-            .then((doc) => {
-                console.log(doc.id);
-                setOrderId(doc.id);
+            .then((resp) => {
+                //updating the stock: since we dont have a backend defined, we have to do all updates on server
+                //which takes time and space, that's the disadvantage of Firebase
+                cart.forEach((item) => {
+                    const docRef = doc(db, "productos", item.id);
+                    getDoc(docRef)
+                        .then((prod) => {
+                            updateDoc(docRef, {quantity: prod.data().quantity - item.counter})
+                        })
+                })
+                //console.log(resp.id);
+                setOrderId(resp.id);
                 clearCart();
             })
             .catch((e) => console.log(e))
