@@ -18,17 +18,25 @@ export const Checkout = () => {
     let orden = {}
 
     const handleInputChange = (e) => {
-        //condicionar input
         setValues({...values, [e.target.id] : e.target.value})
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        /*usar condiciones para validar los campos
-        if (values.name.length < 5){
-            alert("El nombre es muy corto");
-        }*/
+        //validating fields
+        for (const prop in values) {
+            if (values[prop].length === 0){
+                alert(`El campo ${prop} se encuentra vacío`)
+                return;
+            }
+        }
+
+        let phoneRegex = RegExp('[^0-9]');
+        if(phoneRegex.exec(values.phone)){
+            alert("El número de teléfono contiene caractéres no numéricos");
+            return;
+        }
 
         orden = {
             comprador : values,
@@ -55,7 +63,7 @@ export const Checkout = () => {
             })
             .catch((e) => console.log(e))
         
-        console.log(orden);
+        //console.log(orden);
     }
 
     if (orderId) { //its important that this is above the cartlength's early return bc when orderId is set the cart is also emptied
@@ -70,7 +78,6 @@ export const Checkout = () => {
     if (cart.length === 0){
         return <Navigate to="/"/>
     }
-
 
     return (
         <div className="checkoutFormBlock">

@@ -95,4 +95,14 @@ para actualizar un documento debemos usar el objeto doc para buscarlo y luego el
 
 import { doc, updateDoc } from "firebase/firestore"
 import { db } from "../firebase/config"
+
+...
+
+docRef = doc(db, "collection", "doc");
+updateDoc(docRef, {variableDelDocAModificar: valor})
+
+BATCH UPDATE: LOTE DE ESCRITURA
+
+permite generar un bloque de actualizacion, poder revisarlo todo y luego mandarlo todo junto
+
 */
