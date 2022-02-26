@@ -2,8 +2,18 @@
 //Base de datos no relacional: usa colecciones y documentos que se asimilan mucho a arrays y objetos, 
 //es lo que se usa en el Firestore
 
-//los documentos son similares a los objetos JS, llevan valores con keys, pero ademas ecesitan un id 
-//(por estar en una base de datos)
+//Firebase es una Aplicacion Serverless, no significa que no tenga servidor, sino que no lo tenemos que crear nos
+
+//los documentos son similares a los objetos JS, llevan valores con keys, pero ademas necesitan un id propio
+//(por estar en una base de datos), tienen un máximo valor de 1MB
+// al ser noSQL, no son estructurados y cada documento puede tener distintos keys
+// al no haber backend, no tenemos una manera tampoco de verificar que los keys sean correctos
+
+//un documento de firebase puede tener una coleccion adentro, pero actua como pointer a dicha coleccion por
+//lo que borrar dicho documento no elimina las subcolecciones
+
+//la base de datos de firebase no admite undefined (sí admite null)
+//la base de datos de firebase no admite array de arrays
 
 //la diapo dice que se puede pegar la sdk en index.js de react, pero no es obligatorio, otra opcion 
 //es crearle un archivo aparte
@@ -65,4 +75,18 @@ para hacer filtrados es mucho mas eficiente usar metodos de firebase (tipo query
 los productos necesarios, en vez de filtrarlos manualmente despues de importarlos a todos
 
 las imagenes se pueden cargar en el firebase storage y luego referenciarlas desde el token de acceso
+*/
+
+/*
+SOLICITUD DE CREACION O MODIFICACION DE DATOS EN FIREBASE
+
+import { collection, addDoc } from "firebase/firestore"
+import { db } from "../firebase/config"
+
+..
+
+orderRef = collection(db, "orders")
+addDoc(orderRef, orden).then( (doc) => console.log(doc.id)) 
+//recordemos que en general los post en las apis devuelven una replica del objeto agregado si es exitoso
+
 */

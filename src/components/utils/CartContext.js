@@ -29,11 +29,18 @@ export const CartContextProvider = ({children}) => {
     const howMany = (id) => {
         return isInCart(id)? cart.find((prod) => prod.id === id).counter : 0;
     }
-
+    
     //RETURN TOTAL PRODUCT COUNT ON CART
     const cartTotalCounter = () => {
         let sum = 0;
         cart.map((prod) => sum += prod.counter);
+        return sum;
+    }
+    
+    //RETURN TOTAL COST ON CART
+    const cartTotalPrice = () => {
+        let sum = 0;
+        cart.map((prod) => sum += prod.price);
         return sum;
     }
 
@@ -58,8 +65,9 @@ export const CartContextProvider = ({children}) => {
     }
 
 
+
     return (
-        <CartContext.Provider value = {{cart, addToCart, isInCart, howMany, cartTotalCounter, changeCartAmount, deleteFromCart, clearCart}}>
+        <CartContext.Provider value = {{cart, addToCart, isInCart, howMany, cartTotalCounter, cartTotalPrice, changeCartAmount, deleteFromCart, clearCart}}>
             {children}
         </CartContext.Provider>
     )
