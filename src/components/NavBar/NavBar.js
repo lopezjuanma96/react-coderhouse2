@@ -23,9 +23,7 @@ export const NavBar = () => {
                         }
                     )}
                 </div>
-                <Link to='/cart'>
-                    <CartWidget/>
-                </Link>
+                <CartWidget/>
             </div>
             <hr/>
         </div>

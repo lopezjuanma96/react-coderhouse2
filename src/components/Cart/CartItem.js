@@ -12,7 +12,7 @@ export const CartItem = ({prod}) => {
     }
 
     return(
-        <div className="CartItemBlock">
+        <div className="cartItemBlock">
             <Link to={'/item/'+id}>
                 <h3 className="cartItemName">{counter > 1? plural: singular}</h3>
             </Link>
