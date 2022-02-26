@@ -10,17 +10,7 @@ export const ItemDetailContainer = () => {
     let [productState, setProductState] = useState({});
     let [loaded, setLoaded] = useState(false);
     let {itemId} = useParams();
-    /*
-    useEffect(
-        () => {
-            setLoaded(false);
-            const docRef = doc(db, 'productos', itemId);
-            getDoc(docRef).
-                then((resp) => {
-                    console.log(resp.data())
-                })
-        }
-    )*/
+
     useEffect(
         () => {
             setLoaded(false);

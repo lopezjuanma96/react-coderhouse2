@@ -13,24 +13,6 @@ export const ItemListContainer = () => {
     let [loaded, setLoaded] = useState(false);
     let {catId} = useParams();
 
-    //console.log(catId);
-    //console.log(stockState.length);
-
-    /*
-    useEffect(
-        () => {
-            setLoaded(false);
-            const productsRef = collection(db, 'productos');
-            getDocs(productsRef)
-                .then((resp) => {
-                    //console.log(resp);
-                    console.log(resp.docs.map((doc) => doc.data())); //resp es la collection encontrada, el parametro docs te da los documentos en dicha collection en forma de array
-                    setLoaded(true);
-                })
-        },
-        [catId]
-    )*/
-
     useEffect( 
         () => {
             const productsRef = collection(db, 'productos');
@@ -38,15 +20,7 @@ export const ItemListContainer = () => {
             getDocs(q).then( 
                 (res) => {
                     console.log("Products Loaded successfully");
-                    /*
-                    let docList = res.docs.map(
-                        (doc) => {return {
-                            id: doc.id, //id has the doc id
-                            ...doc.data() //data has each field on the doc
-                        }
-                    })
-                    console.log(docList)
-                    */
+
                     setStock(res.docs.map(
                         (doc) => {return {
                             id: doc.id, //id has the doc id
