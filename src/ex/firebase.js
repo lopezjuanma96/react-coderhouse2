@@ -89,4 +89,5 @@ orderRef = collection(db, "orders")
 addDoc(orderRef, orden).then( (doc) => console.log(doc.id)) 
 //recordemos que en general los post en las apis devuelven una replica del objeto agregado si es exitoso
 
+asi el id se define automaticamente, tambien se puede definir
 */

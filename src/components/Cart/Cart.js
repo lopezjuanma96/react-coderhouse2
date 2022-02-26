@@ -13,7 +13,7 @@ export const Cart = () => {
             <h2 className="cartTitle"> Este es tu Carrito</h2>
             {cart.map( (e) => <CartItem key={e.id} prod={e}/> )}
             <button className="clearCartButton" onClick={clearCart} disabled={cart.length === 0}>Vaciar Carrito</button>
-            <Link to={cart.length === 0? "/":"/check"}><button className= "checkoutButton">Terminar Compra</button></Link>
+            <Link to="/check"><button className= "checkoutButton">Terminar Compra</button></Link>
         </div>
     )
 

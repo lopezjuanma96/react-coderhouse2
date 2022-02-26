@@ -2,26 +2,20 @@ import { addDoc, collection } from "firebase/firestore";
 import { useContext, useState } from "react"
 import { db } from "../../firebase/config";
 import { CartContext } from "../utils/CartContext"
+import { Navigate, Link } from 'react-router-dom';
 
 
 export const Checkout = () => {
 
-    const { cart, cartTotalPrice } = useContext(CartContext);
+    const { cart, cartTotalPrice, clearCart } = useContext(CartContext);
     const [ values, setValues ] = useState({
                                             name : "",
                                             email : "",
                                             phone : ""
-                                        })
+                                        });
+    const [ orderId, setOrderId ] = useState(null);
 
-    let orden = {
-        comprador: {
-            name : "Juan",
-            email : "ll@yahoo.com",
-            phone : "123345"
-        },
-        items : cart,
-        total : cartTotalPrice()
-    }
+    let orden = {}
 
     const handleInputChange = (e) => {
         //condicionar input
@@ -39,16 +33,35 @@ export const Checkout = () => {
         orden = {
             comprador : values,
             items : cart,
-            total : cartTotalPrice()
+            total : cartTotalPrice(),
+            ts : new Date()
         }
         
         const ordersRef = collection(db, "orders");
         addDoc(ordersRef, orden)
-            .then((doc) => console.log(doc.id))
+            .then((doc) => {
+                console.log(doc.id);
+                setOrderId(doc.id);
+                clearCart();
+            })
             .catch((e) => console.log(e))
         
         console.log(orden);
     }
+
+    if (orderId) { //its important that this is above the cartlength's early return bc when orderId is set the cart is also emptied
+        return(
+            <>
+                <h2>Tu ID de compra es {orderId}</h2>
+                <Link to="/"><button className="as">Volver</button></Link>
+            </>
+        )
+    }
+
+    if (cart.length === 0){
+        return <Navigate to="/"/>
+    }
+
 
     return (
         <div className="checkoutFormBlock">
