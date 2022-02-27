@@ -3,6 +3,7 @@ import { useContext, useState } from "react"
 import { db } from "../../firebase/config";
 import { CartContext } from "../utils/CartContext"
 import { Navigate, Link } from 'react-router-dom';
+import { validateCheckoutFields } from "./validateCheckoutFields";
 
 
 export const Checkout = () => {
@@ -14,6 +15,30 @@ export const Checkout = () => {
                                             phone : ""
                                         });
     const [ orderId, setOrderId ] = useState(null);
+    const [ invalidFields, setInvalidFields ] = useState({});
+
+    const fieldList = {
+        name : {
+            label : "Nombre",
+            type : "text",
+            ph : "Nombre Apellido"
+        },
+        email : {
+            label : "Tu correo",
+            type : "email",
+            ph : "usuario@correo.com"
+        },
+        email_val : {
+            label : "Tu correo nuevamente",
+            type : "email",
+            ph : "usuario@correo.com"
+        },
+        phone : {
+            label : "Tu teléfono",
+            type : "text",
+            ph : "#########"
+        },
+    }
 
     //batch async callback
     const generateOrderBatch = async () => {
@@ -63,48 +88,18 @@ export const Checkout = () => {
     let order = {}
 
     const handleInputChange = (e) => {
+        delete invalidFields[e.target.id]
         setValues({...values, [e.target.id] : e.target.value})
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
+        
         //validating fields
-        for (const prop in values) {
-            if (values[prop].length === 0){
-                alert(`El campo ${prop} se encuentra vacío`)
-                return;
-            }
-        }
+        const check = validateCheckoutFields(values, setInvalidFields); //this check is used because setInvalidFields is asynchronous, see how to improve it
+        if (Object.keys(check).length > 0) return;
 
-        let phoneRegex = RegExp('[^0-9]');
-        if(phoneRegex.exec(values.phone)){
-            alert("El número de teléfono contiene caractéres no numéricos");
-            return;
-        }
-        
         generateOrderBatch();
-        /*
-        const ordersRef = collection(db, "orders");
-        addDoc(ordersRef, orden)
-            .then((resp) => {
-                //updating the stock: since we dont have a backend defined, we have to do all updates on server
-                //which takes time and space, that's the disadvantage of Firebase
-                cart.forEach((item) => {
-                    const docRef = doc(db, "productos", item.id);
-                    getDoc(docRef)
-                        .then((prod) => {
-                            updateDoc(docRef, {quantity: prod.data().quantity - item.counter})
-                        })
-                })
-                //console.log(resp.id);
-                setOrderId(resp.id);
-                clearCart();
-            })
-            .catch((e) => console.log(e))
-        */
-        
-        //console.log(orden);
     }
 
     if (orderId) { //its important that this is above the cartlength's early return bc when orderId is set the cart is also emptied
@@ -123,27 +118,30 @@ export const Checkout = () => {
     return (
         <div className="checkoutFormBlock">
             <form className="checkoutForm">
-                <input className="checkoutFormInput"
-                       type="text"
-                       placeholder="Tu nombre"
-                       id="name"
-                       name="name"
-                       onChange={handleInputChange}
-                />
-                <input className="checkoutFormInput"
-                       type="email"
-                       placeholder="usuario@correo.com"
-                       id="email"
-                       name="email"
-                       onChange={handleInputChange}
-                />
-                <input className="checkoutFormInput"
-                       type="text"
-                       placeholder="Tu teléfono"
-                       id="phone"
-                       name="phone"
-                       onChange={handleInputChange}
-                />
+                { Object.keys(fieldList).map( (elem) => {
+                    return(
+                        <>
+                        <label for={elem}>{fieldList[elem].label}</label>
+                        {Object.keys(invalidFields).find((e) => e === elem)
+                        ? <input className="checkoutFormInput checkoutFormInputInvalid"
+                                type={fieldList[elem].type}
+                                placeholder={invalidFields[elem]}
+                                id={elem}
+                                name={elem}
+                                value=""
+                                onChange={handleInputChange}
+                                />
+                                : <input className="checkoutFormInput"
+                                type={fieldList[elem].type}
+                                placeholder={fieldList[elem].ph}
+                                id={elem}
+                                name={elem}
+                                onChange={handleInputChange}
+                                />
+                            }
+                        </>
+                    );
+                })}
                 <button className="CheckoutFormSubmit" type="submit" onClick={handleSubmit}>Enviar</button>
             </form>
         </div>
