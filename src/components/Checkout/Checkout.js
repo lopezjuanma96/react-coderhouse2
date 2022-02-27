@@ -4,6 +4,7 @@ import { db } from "../../firebase/config";
 import { CartContext } from "../utils/CartContext"
 import { Navigate, Link } from 'react-router-dom';
 import { validateCheckoutFields } from "./validateCheckoutFields";
+import "./Checkout.css";
 
 
 export const Checkout = () => {
@@ -12,6 +13,7 @@ export const Checkout = () => {
     const [ values, setValues ] = useState({
                                             name : "",
                                             email : "",
+                                            email_val: "",
                                             phone : ""
                                         });
     const [ orderId, setOrderId ] = useState(null);
@@ -44,7 +46,7 @@ export const Checkout = () => {
     const generateOrderBatch = async () => {
         
         order = {
-            comprador : values,
+            comprador : Object.fromEntries(Object.entries(values).filter(([key, val]) => key !== "email_val")), //filters email_validation from document entry
             items : cart,
             total : cartTotalPrice(),
             ts : new Date()
@@ -120,8 +122,8 @@ export const Checkout = () => {
             <form className="checkoutForm">
                 { Object.keys(fieldList).map( (elem) => {
                     return(
-                        <>
-                        <label for={elem}>{fieldList[elem].label}</label>
+                        <div className="checkoutFormItem">
+                        <label className="checkoutFormLabel" for={elem}>{fieldList[elem].label}</label>
                         {Object.keys(invalidFields).find((e) => e === elem)
                         ? <input className="checkoutFormInput checkoutFormInputInvalid"
                                 type={fieldList[elem].type}
@@ -139,10 +141,10 @@ export const Checkout = () => {
                                 onChange={handleInputChange}
                                 />
                             }
-                        </>
+                        </div>
                     );
                 })}
-                <button className="CheckoutFormSubmit" type="submit" onClick={handleSubmit}>Enviar</button>
+                <button className="checkoutFormSubmitButton" type="submit" onClick={handleSubmit}>Finalizar Compra</button>
             </form>
         </div>
     )

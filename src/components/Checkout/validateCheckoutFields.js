@@ -14,6 +14,18 @@ export const validateCheckoutFields = (values, setInvalidFields) => {
         invalidFields.phone = "El número de teléfono contiene caractéres no numéricos";
     }
 
+    let emailRegex = /\w+@\w+\.\w+/;
+    let emailValid = false;
+    if (emailRegex.exec(values.email)) emailValid = true;
+    else invalidFields.email = "Formato de correo incorrecto";
+
+    if (emailRegex.exec(values.email_val)) emailValid = true;
+    else invalidFields.email_val = "Formato de correo incorrecto";
+
+    if (emailValid && values.email !== values.email_val) {
+        invalidFields.email_val = "Las direcciones no coinciden";
+    }
+
     setInvalidFields(invalidFields);
 
     return invalidFields;
