@@ -1,0 +1,66 @@
+.checkoutFormBlock{
+    padding: 1%;
+}
+
+.checkoutForm{
+    padding: 5% 30%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    align-items: start;
+}
+
+.checkoutFormItem{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width : 100%;
+    align-items: center;
+}
+
+.checkoutFormLabel{
+    font-size: 1.3rem;
+    color:rgb(39, 37, 37);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.checkoutFormInput{
+    width : 60%;
+    padding:1%;
+}
+
+.checkoutFormInputInvalid{
+    color: rgb(182, 3, 3);
+    background-color: rgb(250, 206, 206);
+    border-width: 2px;
+    border-color: rgb(255, 79, 79);
+    border-radius: 4%;
+}
+
+.checkoutFormSubmitButton{
+    padding: 2%;
+    margin-left: 10%;
+    width: 80%;
+    background-color:rgb(26, 165, 26);
+    color: white;
+    font-weight: bold;
+    border-width: 0px;
+    -webkit-border-radius: 15%;
+    -moz-border-radius: 15%;
+    border-radius: 10px;
+}
+
+.checkoutFormSubmitButton:hover{
+    cursor: pointer;
+    background-color: rgb(58, 97, 170);
+}
+
+.checkoutFormSubmitButton:active{
+    cursor: pointer;
+    background-color: rgb(82, 121, 194);
+}
+
+.checkoutFormSubmitButton:disabled{
+    cursor: default;
+    background-color: rgba(66, 61, 58, 0.5);
+}
