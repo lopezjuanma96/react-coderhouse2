@@ -1,11 +1,10 @@
-import { addDoc, collection, writeBatch, query, where, documentId, getDocs } from "firebase/firestore";
 import { useContext, useState } from "react"
-import { db } from "../../firebase/config";
 import { CartContext } from "../utils/CartContext"
 import { Navigate, Link } from 'react-router-dom';
 import { validateCheckoutFields } from "./validateCheckoutFields";
 import "./Checkout.css";
-
+import { generateOrderBatch } from "./generateOrderBatch";
+import { fieldList } from "./formData";
 
 export const Checkout = () => {
 
@@ -19,76 +18,6 @@ export const Checkout = () => {
     const [ orderId, setOrderId ] = useState(null);
     const [ invalidFields, setInvalidFields ] = useState({});
 
-    const fieldList = {
-        name : {
-            label : "Nombre",
-            type : "text",
-            ph : "Nombre Apellido"
-        },
-        email : {
-            label : "Tu correo",
-            type : "email",
-            ph : "usuario@correo.com"
-        },
-        email_val : {
-            label : "Tu correo nuevamente",
-            type : "email",
-            ph : "usuario@correo.com"
-        },
-        phone : {
-            label : "Tu teléfono",
-            type : "text",
-            ph : "#########"
-        },
-    }
-
-    //batch async callback
-    const generateOrderBatch = async () => {
-        
-        order = {
-            comprador : Object.fromEntries(Object.entries(values).filter(([key, val]) => key !== "email_val")), //filters email_validation from document entry
-            items : cart,
-            total : cartTotalPrice(),
-            ts : new Date()
-        }
-
-        //batch creation
-        const orderBatch = writeBatch(db);
-        const productsRef = collection(db, "products");
-        const orderssRef = collection(db, "orders");
-        
-        const q = query(productsRef, where(documentId(), "in", cart.map((item) => item.id)));
-        //documentId gets the Id of each document on the collection passed by on productsRef
-
-        const prods = await getDocs(q); //await waits for the async function to finish
-        const outOfStock = [];
-
-        prods.docs.forEach((eachDoc) => {
-            const itemToUpdate = cart.find((item) => item.id === eachDoc.id);
-
-            if (eachDoc.data().quantity >= itemToUpdate.counter){
-                orderBatch.update(eachDoc.ref, //this replaces doing doc(db, eachDoc.id)
-                                  {quantity: eachDoc.data().quantity - itemToUpdate.counter} //similar to updateDoc we pass the props to modify
-                                )
-            } else {
-                outOfStock.push(itemToUpdate);
-            }
-
-            if (outOfStock.length === 0){
-                addDoc(orderssRef, order)
-                    .then((resp) => {
-                        orderBatch.commit(); //this does the final update
-                        setOrderId(resp.id);
-                        clearCart();
-                    })
-            } else {
-                alert("Algunos productos no tienen suficiente stock para la compra");
-            }
-        })
-    }
-
-    let order = {}
-
     const handleInputChange = (e) => {
         delete invalidFields[e.target.id]
         setValues({...values, [e.target.id] : e.target.value})
@@ -101,7 +30,7 @@ export const Checkout = () => {
         const check = validateCheckoutFields(values, setInvalidFields); //this check is used because setInvalidFields is asynchronous, see how to improve it
         if (Object.keys(check).length > 0) return;
 
-        generateOrderBatch();
+        generateOrderBatch(values, setOrderId, cart, cartTotalPrice, clearCart);
     }
 
     if (orderId) { //its important that this is above the cartlength's early return bc when orderId is set the cart is also emptied
@@ -120,10 +49,10 @@ export const Checkout = () => {
     return (
         <div className="checkoutFormBlock">
             <form className="checkoutForm">
-                { Object.keys(fieldList).map( (elem) => {
+                { Object.keys(fieldList).map( (elem, index) => {
                     return(
-                        <div className="checkoutFormItem">
-                        <label className="checkoutFormLabel" for={elem}>{fieldList[elem].label}</label>
+                        <div key={index} className="checkoutFormItem">
+                        <label className="checkoutFormLabel" htmlFor={elem}>{fieldList[elem].label}</label>
                         {Object.keys(invalidFields).find((e) => e === elem)
                         ? <input className="checkoutFormInput checkoutFormInputInvalid"
                                 type={fieldList[elem].type}
