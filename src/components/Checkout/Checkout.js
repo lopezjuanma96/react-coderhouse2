@@ -54,7 +54,7 @@ export const Checkout = () => {
 
         //batch creation
         const orderBatch = writeBatch(db);
-        const productsRef = collection(db, "productos");
+        const productsRef = collection(db, "products");
         const orderssRef = collection(db, "orders");
         
         const q = query(productsRef, where(documentId(), "in", cart.map((item) => item.id)));
