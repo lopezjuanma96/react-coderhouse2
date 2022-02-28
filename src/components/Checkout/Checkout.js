@@ -1,9 +1,10 @@
-import { addDoc, collection, writeBatch, query, where, documentId, getDocs } from "firebase/firestore";
 import { useContext, useState } from "react"
-import { db } from "../../firebase/config";
 import { CartContext } from "../utils/CartContext"
 import { Navigate, Link } from 'react-router-dom';
-
+import { validateCheckoutFields } from "./validateCheckoutFields";
+import "./Checkout.css";
+import { generateOrderBatch } from "./generateOrderBatch";
+import { fieldList } from "./formData";
 
 export const Checkout = () => {
 
@@ -11,100 +12,25 @@ export const Checkout = () => {
     const [ values, setValues ] = useState({
                                             name : "",
                                             email : "",
+                                            email_val: "",
                                             phone : ""
                                         });
     const [ orderId, setOrderId ] = useState(null);
-
-    //batch async callback
-    const generateOrderBatch = async () => {
-        
-        order = {
-            comprador : values,
-            items : cart,
-            total : cartTotalPrice(),
-            ts : new Date()
-        }
-
-        //batch creation
-        const orderBatch = writeBatch(db);
-        const productsRef = collection(db, "productos");
-        const orderssRef = collection(db, "orders");
-        
-        const q = query(productsRef, where(documentId(), "in", cart.map((item) => item.id)));
-        //documentId gets the Id of each document on the collection passed by on productsRef
-
-        const prods = await getDocs(q); //await waits for the async function to finish
-        const outOfStock = [];
-
-        prods.docs.forEach((eachDoc) => {
-            const itemToUpdate = cart.find((item) => item.id === eachDoc.id);
-
-            if (eachDoc.data().quantity >= itemToUpdate.counter){
-                orderBatch.update(eachDoc.ref, //this replaces doing doc(db, eachDoc.id)
-                                  {quantity: eachDoc.data().quantity - itemToUpdate.counter} //similar to updateDoc we pass the props to modify
-                                )
-            } else {
-                outOfStock.push(itemToUpdate);
-            }
-
-            if (outOfStock.length === 0){
-                addDoc(orderssRef, order)
-                    .then((resp) => {
-                        orderBatch.commit(); //this does the final update
-                        setOrderId(resp.id);
-                        clearCart();
-                    })
-            } else {
-                alert("Algunos productos no tienen suficiente stock para la compra");
-            }
-        })
-    }
-
-    let order = {}
+    const [ invalidFields, setInvalidFields ] = useState({});
 
     const handleInputChange = (e) => {
+        delete invalidFields[e.target.id]
         setValues({...values, [e.target.id] : e.target.value})
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-
+        
         //validating fields
-        for (const prop in values) {
-            if (values[prop].length === 0){
-                alert(`El campo ${prop} se encuentra vacío`)
-                return;
-            }
-        }
+        const check = validateCheckoutFields(values, setInvalidFields); //this check is used because setInvalidFields is asynchronous, see how to improve it
+        if (Object.keys(check).length > 0) return;
 
-        let phoneRegex = RegExp('[^0-9]');
-        if(phoneRegex.exec(values.phone)){
-            alert("El número de teléfono contiene caractéres no numéricos");
-            return;
-        }
-        
-        generateOrderBatch();
-        /*
-        const ordersRef = collection(db, "orders");
-        addDoc(ordersRef, orden)
-            .then((resp) => {
-                //updating the stock: since we dont have a backend defined, we have to do all updates on server
-                //which takes time and space, that's the disadvantage of Firebase
-                cart.forEach((item) => {
-                    const docRef = doc(db, "productos", item.id);
-                    getDoc(docRef)
-                        .then((prod) => {
-                            updateDoc(docRef, {quantity: prod.data().quantity - item.counter})
-                        })
-                })
-                //console.log(resp.id);
-                setOrderId(resp.id);
-                clearCart();
-            })
-            .catch((e) => console.log(e))
-        */
-        
-        //console.log(orden);
+        generateOrderBatch(values, setOrderId, cart, cartTotalPrice, clearCart);
     }
 
     if (orderId) { //its important that this is above the cartlength's early return bc when orderId is set the cart is also emptied
@@ -123,28 +49,31 @@ export const Checkout = () => {
     return (
         <div className="checkoutFormBlock">
             <form className="checkoutForm">
-                <input className="checkoutFormInput"
-                       type="text"
-                       placeholder="Tu nombre"
-                       id="name"
-                       name="name"
-                       onChange={handleInputChange}
-                />
-                <input className="checkoutFormInput"
-                       type="email"
-                       placeholder="usuario@correo.com"
-                       id="email"
-                       name="email"
-                       onChange={handleInputChange}
-                />
-                <input className="checkoutFormInput"
-                       type="text"
-                       placeholder="Tu teléfono"
-                       id="phone"
-                       name="phone"
-                       onChange={handleInputChange}
-                />
-                <button className="CheckoutFormSubmit" type="submit" onClick={handleSubmit}>Enviar</button>
+                { Object.keys(fieldList).map( (elem, index) => {
+                    return(
+                        <div key={index} className="checkoutFormItem">
+                        <label className="checkoutFormLabel" htmlFor={elem}>{fieldList[elem].label}</label>
+                        {Object.keys(invalidFields).find((e) => e === elem)
+                        ? <input className="checkoutFormInput checkoutFormInputInvalid"
+                                type={fieldList[elem].type}
+                                placeholder={invalidFields[elem]}
+                                id={elem}
+                                name={elem}
+                                value=""
+                                onChange={handleInputChange}
+                                />
+                                : <input className="checkoutFormInput"
+                                type={fieldList[elem].type}
+                                placeholder={fieldList[elem].ph}
+                                id={elem}
+                                name={elem}
+                                onChange={handleInputChange}
+                                />
+                            }
+                        </div>
+                    );
+                })}
+                <button className="checkoutFormSubmitButton" type="submit" onClick={handleSubmit}>Finalizar Compra</button>
             </form>
         </div>
     )

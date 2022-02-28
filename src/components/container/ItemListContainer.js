@@ -15,12 +15,11 @@ export const ItemListContainer = () => {
 
     useEffect( 
         () => {
-            const productsRef = collection(db, 'productos');
+            const productsRef = collection(db, 'products');
             const q = catId ? query(productsRef, where('category', '==', catId)) : productsRef;
-            getDocs(q).then( 
+            getDocs(q).then(
                 (res) => {
                     console.log("Products Loaded successfully");
-
                     setStock(res.docs.map(
                         (doc) => {return {
                             id: doc.id, //id has the doc id
