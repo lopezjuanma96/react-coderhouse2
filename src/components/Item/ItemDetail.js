@@ -4,12 +4,16 @@ import { ItemCount } from "./ItemCount";
 import { CartContext } from '../utils/CartContext';
 import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { getImageFromStorage } from './getImageFromStorage';
 
 export const ItemDetail = ({product}) => {
     let {id, nameS: singular, nameP:plural, price, quantity: amt, image:img} = product;
 
     const {addToCart} = useContext(CartContext);
     const [amtCart, setAmtCart] = useState(0);
+
+    const [imgURL, setImageURL] = useState("http://via.placeholder.com/300x300")
+    getImageFromStorage(img, setImageURL);
 
     const onAdd = (counter) => {
         setAmtCart(counter);
@@ -19,7 +23,7 @@ export const ItemDetail = ({product}) => {
     return(
         <>
             <div className="itemBlock">
-                <img className="itemImage" src={img} alt={id}></img>
+                <img className="itemImage" src={imgURL} alt={id}></img>
                 <div className="itemDescriptionBlock">
                     <h2 className="itemName">{amt>1? plural:singular}</h2>
                     <p className="itemDescription">{defaultText}</p>
