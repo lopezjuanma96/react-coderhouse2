@@ -23,6 +23,7 @@ Para algunas de las rúbricas opcionales:
 - El formulario de Checkout presenta algunas validaciones: Ningún campo puede estar vacío, los campos de correo deben respetar una cierta estructura de abcde@efg.xyz (donde cada letra representa una letra cualquiera), a la vez que el campo de email y de validación de email deben ser iguales, y el campo de teléfono no puede presentar caracteres que no sean numéricos.
 
 Un ejemplo de uso de la aplicación puede encontrarse aquí:
-
+https://youtu.be/L0WPDGMUYRo
 
 El sitio web se enceuntra desplegado aquí:
+https://lopezjuanma96.github.io/react-coderhouse2
