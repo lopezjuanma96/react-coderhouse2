@@ -22,6 +22,8 @@ Para algunas de las rúbricas opcionales:
 
 - El formulario de Checkout presenta algunas validaciones: Ningún campo puede estar vacío, los campos de correo deben respetar una cierta estructura de abcde@efg.xyz (donde cada letra representa una letra cualquiera), a la vez que el campo de email y de validación de email deben ser iguales, y el campo de teléfono no puede presentar caracteres que no sean numéricos.
 
+- Las imágenes se cargan desde un Storage de Firebase, colocando un placeholder hasta que la misma se haya descargado.
+
 Un ejemplo de uso de la aplicación puede encontrarse aquí:
 https://youtu.be/L0WPDGMUYRo
 
