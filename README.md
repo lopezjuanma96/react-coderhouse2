@@ -26,4 +26,4 @@ Un ejemplo de uso de la aplicación puede encontrarse aquí:
 https://youtu.be/L0WPDGMUYRo
 
 El sitio web se enceuntra desplegado aquí:
-https://lopezjuanma96.github.io/react-coderhouse2
+https://lopezjuanma96.github.io/react-coderhouse2/
