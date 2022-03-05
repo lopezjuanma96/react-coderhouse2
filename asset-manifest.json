@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/react-coderhouse2/static/css/main.9c11efa6.css",
+    "main.js": "/react-coderhouse2/static/js/main.c8ec6dbb.js",
+    "static/js/787.c3c25fe9.chunk.js": "/react-coderhouse2/static/js/787.c3c25fe9.chunk.js",
+    "index.html": "/react-coderhouse2/index.html",
+    "main.9c11efa6.css.map": "/react-coderhouse2/static/css/main.9c11efa6.css.map",
+    "main.c8ec6dbb.js.map": "/react-coderhouse2/static/js/main.c8ec6dbb.js.map",
+    "787.c3c25fe9.chunk.js.map": "/react-coderhouse2/static/js/787.c3c25fe9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9c11efa6.css",
+    "static/js/main.c8ec6dbb.js"
+  ]
+}
