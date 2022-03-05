@@ -1,0 +1,6 @@
+npm run build //Crea el compilado en la carpeta build
+
+npm install -u serve
+serve -s build //genera el servidor local
+
+to generate a github-pages use this: https://github.com/gitname/react-gh-pages
