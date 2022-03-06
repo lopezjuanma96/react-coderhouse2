@@ -1,0 +1,55 @@
+.userLoginBlock{
+    width: 100%;
+    padding: 2%;
+}
+
+.userLoginForm{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    align-items: flex-start;
+    padding: 5% 30%;
+}
+
+.userLoginItem{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width : 100%;
+    align-items: center;
+}
+
+.userLoginLabel{
+    font-size: 1.3rem;
+    color:rgb(39, 37, 37);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.userLoginInput{
+    width : 60%;
+    padding:1%;
+}
+
+.userLoginSubmitButton{
+    padding: 2%;
+    margin-left: 10%;
+    width: 80%;
+    background-color: cornflowerblue;
+    color: white;
+    font-weight: bold;
+    border-width: 0px;
+    -webkit-border-radius: 15%;
+    -moz-border-radius: 15%;
+    border-radius: 10px;
+}
+
+.userLoginSubmitButton:hover{
+    cursor: pointer;
+    background-color: rgb(58, 97, 170);
+}
+
+.userLoginSubmitButton:active{
+    cursor: pointer;
+    background-color: rgb(82, 121, 194);
+}
+

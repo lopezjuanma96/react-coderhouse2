@@ -1,0 +1,22 @@
+.userLogoutButton{
+    padding: 2%;
+    margin-left: 10%;
+    width: 80%;
+    background-color:rgb(216, 68, 97);
+    color: white;
+    font-weight: bold;
+    border-width: 0px;
+    -webkit-border-radius: 15%;
+    -moz-border-radius: 15%;
+    border-radius: 10px;
+}
+
+.userLogoutButton:hover{
+    cursor: pointer;
+    background-color: crimson;
+}
+
+.userLogoutButton:active{
+    cursor: pointer;
+    background-color: rgb(223, 112, 134);
+}

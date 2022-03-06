@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { useEffect, useState } from 'react';
+import { UserWidget } from './UserWidget';
 
 export const NavBar = () => {
 
@@ -35,6 +36,7 @@ export const NavBar = () => {
                     )}
                 </div>
                 <CartWidget/>
+                <UserWidget/>
             </div>
             <hr/>
         </div>

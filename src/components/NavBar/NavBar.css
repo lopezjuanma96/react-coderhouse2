@@ -6,6 +6,7 @@ a{
     background-color: burlywood;
     border-bottom: rgba(160, 82, 45, 0.9) solid 3px;
     padding: 1% 10%;
+    z-index: 0;
 }
 
 .navbar-content{
